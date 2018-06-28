@@ -15,4 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/game/over', 'GameController@over');
 Route::get('/game/new', 'GameController@new');
+Route::get('/game/guess', 'GameController@guess');
+Route::get('/game/guess/{action}', 'GameController@guess');
