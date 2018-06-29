@@ -180,7 +180,7 @@ class Game extends Model
      *
      * @return array
      */
-    public static function getCurrentGameData()
+    public function getCurrentGameData()
     {
         return [
             'cards' => session('cards'),

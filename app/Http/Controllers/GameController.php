@@ -9,6 +9,12 @@ use App\Game;
 
 class GameController extends Controller
 {
+    private $game;
+
+    public function __construct(Game $game)
+    {
+        $this->game = $game;
+    }
 
     /**
      * Sets up a new game
@@ -16,8 +22,7 @@ class GameController extends Controller
      */
     public function new()
     {
-        $game = new Game();
-        $game->setup();
+        $this->game->setup();
 
         // Redirect to first guess
         return redirect('/game/guess');
@@ -32,15 +37,14 @@ class GameController extends Controller
     public function guess($action = null)
     {
         if (isset($action)) {
-            $game = new Game();
-            $gameStatus = $game->play($action);
+            $gameStatus = $this->game->play($action);
             if ($gameStatus === false) {
                 // Game over
                 return redirect('/game/over');
             }
         }
 
-        $gameData = Game::getCurrentGameData();
+        $gameData = $this->game->getCurrentGameData();
 
         //return $gameData;
 
@@ -54,7 +58,7 @@ class GameController extends Controller
      */
     public function over()
     {
-        $gameData = Game::getCurrentGameData();
+        $gameData = $this->game->getCurrentGameData();
         return view('game.over', compact('gameData'));
     }
 }
